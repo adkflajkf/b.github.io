@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Canais</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canais ao Vivo</title>
+  <link rel="stylesheet" href="/b.github.io/css/styles.css" />
+  <link rel="shortcut icon" href="/b.github.io/img/espn.ico" type="image/png" />
+  <style>
+    body {
+      background-color: #00000e;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    .channel-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    a {
+      display: block;
+      font-size: 1.5rem;
+      background: #222;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      transition: 0.3s;
+      width: 280px;
+    }
+
+    a:hover {
+      background-color: #00ffff;
+      color: #000;
+      box-shadow: 0 0 15px #00ffff;
+    }
+  </style>
 </head>
-<body style="background-color: black; color: white; text-align: center; font-family: sans-serif;">
-    <h1>Seletor de Canais</h1>
-    <p><a href="canais/sportv/" style="color: #00BFFF;">SporTV</a></p>
-    <p><a href="canais/premiere/" style="color: #00FF7F;">Premiere</a></p>
-    <p><a href="canais/espn/" style="color: #FFA500;">ESPN</a></p>
+<body>
+  <h1>Selecione um Canal</h1>
+  <div class="channel-links">
+    <a href="canais/sportv/">🎥 SporTV</a>
+    <a href="canais/premiere/">⚽ Premiere</a>
+    <a href="canais/espn/">🏆 ESPN</a>
+  </div>
 </body>
 </html>
