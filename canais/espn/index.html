@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESPN</title>
+  <link rel="shortcut icon" href="/img/espn.ico" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
+      color: #00ccff;
+      text-shadow: 0 0 10px #00ccff;
+    }
+
+    .buttons {
+      margin: 10px 0 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .buttons button {
+      background: #444;
+      color: #fff;
+      border: 2px solid #666;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .buttons button.active {
+      background: #00ccff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .buttons button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ccff;
+    }
+
+    .player-container {
+      position: relative;
+      width: 95%;
+      max-width: 1400px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 650px;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 204, 255, 0.4);
+    }
+
+    .reload {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .reload:hover {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <h1>ESPN</h1>
+
+  <div class="buttons">
+    <button id="btn-espn" onclick="loadChannel('espn')">ESPN</button>
+    <button id="btn-espn2" onclick="loadChannel('espn2')">ESPN 2</button>
+    <button id="btn-espn3" onclick="loadChannel('espn3')">ESPN 3</button>
+    <button id="btn-espn4" onclick="loadChannel('espn4')">ESPN 4</button>
+  </div>
+
+  <div class="player-container">
+    <span class="reload" onclick="reloadPlayer()">🔄</span>
+    <iframe id="player" allow="encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const buttons = {
+      espn: document.getElementById('btn-espn'),
+      espn2: document.getElementById('btn-espn2'),
+      espn3: document.getElementById('btn-espn3'),
+      espn4: document.getElementById('btn-espn4')
+    };
+
+    function loadChannel(id) {
+      const url = `https://meuplayeronlinehd.com/myplay/watch.html?id=${id}`;
+      player.src = url;
+      localStorage.setItem('currentChannel', id);
+      setActiveButton(id);
+    }
+
+    function reloadPlayer() {
+      const currentId = localStorage.getItem('currentChannel') || 'espn';
+      loadChannel(currentId);
+    }
+
+    function setActiveButton(activeId) {
+      Object.keys(buttons).forEach(id => {
+        if (id === activeId) {
+          buttons[id].classList.add('active');
+        } else {
+          buttons[id].classList.remove('active');
+        }
+      });
+    }
+
+    window.onload = () => {
+      const saved = localStorage.getItem('currentChannel') || 'espn';
+      loadChannel(saved);
+    };
+  </script>
+</body>
+</html>

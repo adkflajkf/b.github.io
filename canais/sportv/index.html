@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SporTV</title>
+  <link rel="shortcut icon" href="/img/sportv.ico" type="image/png">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/js/service-worker.js')
+        .then(reg => console.log('Service Worker registrado:', reg))
+        .catch(err => console.error('Erro ao registrar Service Worker:', err));
+    }
+  </script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #00000e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
+      color: #3399ff;
+      text-shadow: 0 0 10px #3399ff;
+    }
+
+    .buttons {
+      margin: 10px 0 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .buttons button {
+      background: #444;
+      color: #fff;
+      border: 2px solid #666;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .buttons button.active {
+      background: #3399ff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .buttons button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #3399ff;
+    }
+
+    .player-container {
+      position: relative;
+      width: 95%;
+      max-width: 1400px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 650px;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(51, 153, 255, 0.4);
+    }
+
+    .reload {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .reload:hover {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <h1>SporTV</h1>
+
+  <div class="buttons">
+    <button id="btn-sportv" onclick="loadChannel('sportv')">SporTV</button>
+    <button id="btn-sportv2" onclick="loadChannel('sportv2')">SporTV 2</button>
+    <button id="btn-sportv3" onclick="loadChannel('sportv3')">SporTV 3</button>
+    <button id="btn-sportv4" onclick="loadChannel('sportv4')">SporTV 4</button>
+  </div>
+
+  <div class="player-container">
+    <span class="reload" onclick="reloadPlayer()">🔄</span>
+    <iframe id="player" allow="encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    const buttons = {
+      sportv: document.getElementById('btn-sportv'),
+      sportv2: document.getElementById('btn-sportv2'),
+      sportv3: document.getElementById('btn-sportv3'),
+      sportv4: document.getElementById('btn-sportv4')
+    };
+
+    function loadChannel(id) {
+      const url = `https://meuplayeronlinehd.com/myplay/watch.html?id=${id}`;
+      player.src = url;
+      localStorage.setItem('currentSportvChannel', id);
+      setActiveButton(id);
+    }
+
+    function reloadPlayer() {
+      const currentId = localStorage.getItem('currentSportvChannel') || 'sportv';
+      loadChannel(currentId);
+    }
+
+    function setActiveButton(activeId) {
+      Object.keys(buttons).forEach(id => {
+        buttons[id].classList.toggle('active', id === activeId);
+      });
+    }
+
+    window.onload = () => {
+      const saved = localStorage.getItem('currentSportvChannel') || 'sportv';
+      loadChannel(saved);
+    };
+  </script>
+</body>
+</html>
